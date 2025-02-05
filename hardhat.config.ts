@@ -22,7 +22,8 @@ const argv = yargs
 // Load environment variables.
 dotenv.config();
 const {
-    NODE_URL,
+    NODE_SOLARIS_URL,
+    NODE_NEBULAS_URL,
     INFURA_KEY,
     MNEMONIC,
     ETHERSCAN_API_KEY,
@@ -164,10 +165,17 @@ const userConfig: HardhatUserConfig = {
         apiKey: ETHERSCAN_API_KEY,
     },
 };
-if (NODE_URL) {
-    userConfig.networks!.custom = {
+if (NODE_SOLARIS_URL) {
+    userConfig.networks!.custom_solaris = {
         ...sharedNetworkConfig,
-        url: NODE_URL,
+        url: NODE_SOLARIS_URL,
+        zksync: HARDHAT_ENABLE_ZKSYNC === "1",
+    };
+}
+if (NODE_NEBULAS_URL) {
+    userConfig.networks!.custom_nebulas = {
+        ...sharedNetworkConfig,
+        url: NODE_NEBULAS_URL,
         zksync: HARDHAT_ENABLE_ZKSYNC === "1",
     };
 }
